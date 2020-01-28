@@ -1,5 +1,17 @@
 
 #' Transform a Leetcode JSON data file into csv format
+#'
+#' Transform Leetcode's data files of Database problems, which is often in
+#' JSON format, to be in csv format. The csv file can then be imported into
+#' Postgres. The csv file is saved in the same directory as that of the
+#' JSON file.
+#'
+#' @param path A string of characters indicating the path of json data file
+#' @param file.name A string of characters representing the json file name, excluding extension ".json"
+#'
+#' @return NA
+#' @export
+#'
 
 transformLeetcodeJsonToCsv = function(path, file.name){
 
