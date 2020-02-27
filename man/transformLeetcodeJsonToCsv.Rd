@@ -4,15 +4,17 @@
 \alias{transformLeetcodeJsonToCsv}
 \title{Transform a Leetcode JSON data file into csv format}
 \usage{
-transformLeetcodeJsonToCsv(path, file.name)
+transformLeetcodeJsonToCsv(path, file.name, write.file = TRUE)
 }
 \arguments{
 \item{path}{A string of characters indicating the path of json data file}
 
 \item{file.name}{A string of characters representing the json file name, excluding extension ".json"}
+
+\item{write.file}{A boolean, indicating whether to write files to path}
 }
 \value{
-NA
+A list of dataframes; each one represents a table
 }
 \description{
 Transform Leetcode's data files of Database problems, which is often in

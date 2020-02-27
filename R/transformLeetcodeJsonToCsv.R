@@ -8,25 +8,34 @@
 #'
 #' @param path A string of characters indicating the path of json data file
 #' @param file.name A string of characters representing the json file name, excluding extension ".json"
+#' @param write.file A boolean, indicating whether to write files to path
 #'
-#' @return NA
+#' @return A list of dataframes; each one represents a table
 #' @export
 #'
 
-transformLeetcodeJsonToCsv = function(path, file.name){
+transformLeetcodeJsonToCsv = function(path, file.name, write.file = TRUE){
 
   result = rjson::fromJSON(file = paste(path, file.name, ".json", sep = ""))
 
-  data.by.row = result[["rows"]][[1]]
-  df.result =
-    data.frame(matrix(unlist(data.by.row),
-                      nrow = length(data.by.row),
-                      byrow = TRUE),
-               stringsAsFactors = FALSE)
-  colnames(df.result) = result[[1]][[1]]
+  file.list = list()
 
-  write.csv(df.result, paste(path, file.name, ".csv", sep = ""),
-            row.names = FALSE, quote = TRUE)
+  for(i in 1:length(result[["rows"]])){
+    data.by.row = result[["rows"]][[i]]
+    df.result =
+      data.frame(matrix(unlist(data.by.row),
+                        nrow = length(data.by.row),
+                        byrow = TRUE),
+                 stringsAsFactors = FALSE)
+    colnames(df.result) = result[["headers"]][[i]]
+    table.name = names(result[["headers"]])[i]
+    file.list[[table.name]] = df.result
 
-  return(NA)
+    if(write.file){
+      write.csv(df.result, paste(path, file.name, "-", table.name, ".csv", sep = ""),
+                row.names = FALSE, quote = TRUE)
+    }
+  }
+
+  return(file.list)
 }
